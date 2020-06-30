@@ -1,0 +1,18 @@
+.filters {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  font-size: 1.6rem;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 0.6em 1.5em;
+  background-color: #0086A8;
+  border-radius: 1em 0 0 0;
+
+  &.center {
+    left: 50%;
+    transform: translate(-50%, 0%);
+    border-radius: 1em 1em 0 0;
+    padding: 0.6em 1em;
+  }
+}

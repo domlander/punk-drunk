@@ -1,0 +1,36 @@
+.container {
+  background: white;
+  border-radius: 1em;
+  display: flex;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+
+.image {
+  align-self: center;
+  height: 133px;
+  width: 35px;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 2em;
+}
+
+.name {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.tagline {
+  font-size: 1.1rem;
+  margin-top: 0.5em;
+}
+
+.abv {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 0.5em;
+}
