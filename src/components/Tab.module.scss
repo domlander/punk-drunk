@@ -1,0 +1,25 @@
+.tab {
+  position: fixed;
+  bottom: 0;
+  font-size: 2rem;
+  text-align: center;
+  background-color: #FFFFFF;
+  padding: 0.2em 0.6em;
+  color: #0086A8;
+
+  &.left {
+    left: 0;
+    border-radius: 0 0.6em 0 0;
+  }
+
+  &.center {
+    left: 50%;
+    transform: translate(-50%, 0%);
+    border-radius: 0.6em 0.6em 0 0;
+  }
+
+  &.right {
+    right: 0;
+    border-radius: 0.6em 0 0 0;
+  }
+}
