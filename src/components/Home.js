@@ -9,12 +9,9 @@ export const baseUrl = "https://api.punkapi.com/v2/beers";
 
 // const isBottomOfPage = () => window.innerHeight + document.documentElement.scrollTop + (window.innerHeight / 2) > document.documentElement.offsetHeight;
 
-const Home = () => {
-  const [beers, setBeers] = useState([]);
-  const [showFilters, setShowFilters] = useState(false);
-  // const [endOfPageReached, setEndOfPageReached] = useState(false);
-  const [page, setPage] = useState(1);
+let timesReachedEndOfPage = 1;
 
+const Home = () => {
   const defaultStrengthLowFilter = parseInt(localStorage.getItem("strength_low")) || utils.filterLimits["weakestPossibleStrength"];
   const defaultStrengthHighFilter = parseInt(localStorage.getItem("strength_high")) || utils.filterLimits["strongestPossibleStrength"];
   const defaultBitternessLowFilter = parseInt(localStorage.getItem("bitterness_low")) || utils.filterLimits["lowestPossibleBitterness"];
@@ -26,13 +23,20 @@ const Home = () => {
   const [bitterness, setBitterness] = React.useState([defaultBitternessLowFilter, defaultBitternessHighFilter]);
   const [colour, setColour] = React.useState([defaultColourLowFilter, defaultColourHighFilter]);
 
+  const [showFilters, setShowFilters] = useState(false);
+  const [beers, setBeers] = useState([]);
+  const [page, setPage] = useState(1);
   const [ref, entry] = useIntersect({});
+  // const [endOfPageReached, setEndOfPageReached] = useState(false);
   const isVisible = entry && entry.isIntersecting;
 
-  // useEffect(() => {
-  //   console.log(" - - - - - endOfPageReached", isVisible)
-  //   setEndOfPageReached(isVisible);
-  // }, [isVisible])
+  useEffect(() => {
+    // console.log(" - - - - - endOfPageReached", isVisible)
+    // setEndOfPageReached(isVisible);
+    if (!isVisible) return;
+    timesReachedEndOfPage++
+    setPage(timesReachedEndOfPage);
+  }, [isVisible])
 
   useEffect(() => {
     // Collect the filters that we need for the api call
@@ -51,7 +55,7 @@ const Home = () => {
       apiFilters.map(filter => url = url + `&${filter}`)
     }
 
-    console.log('filters:', strength, bitterness, colour, page)
+    console.log('dependencies:', strength, bitterness, colour, page)
 
     if (page > 1) {
       const delimiter = url === baseUrl ? '?' : "&"
