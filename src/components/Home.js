@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Filters from './Filters'
 import Beers from './Beers';
-import useFetch from '../hooks/useFetch'
 import useIntersect from '../hooks/useIntersect'
 import * as utils from "../utils";
 // import styles from './Home.module.scss';
@@ -13,7 +12,8 @@ export const baseUrl = "https://api.punkapi.com/v2/beers";
 const Home = () => {
   const [beers, setBeers] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [endOfPageReached, setEndOfPageReached] = useState(false);
+  // const [endOfPageReached, setEndOfPageReached] = useState(false);
+  const [page, setPage] = useState(1);
 
   const defaultStrengthLowFilter = parseInt(localStorage.getItem("strength_low")) || utils.filterLimits["weakestPossibleStrength"];
   const defaultStrengthHighFilter = parseInt(localStorage.getItem("strength_high")) || utils.filterLimits["strongestPossibleStrength"];
@@ -29,10 +29,10 @@ const Home = () => {
   const [ref, entry] = useIntersect({});
   const isVisible = entry && entry.isIntersecting;
 
-  useEffect(() => {
-    console.log(" - - - - - endOfPageReached", isVisible)
-    setEndOfPageReached(isVisible);
-  }, [isVisible])
+  // useEffect(() => {
+  //   console.log(" - - - - - endOfPageReached", isVisible)
+  //   setEndOfPageReached(isVisible);
+  // }, [isVisible])
 
   useEffect(() => {
     // Collect the filters that we need for the api call
@@ -51,12 +51,21 @@ const Home = () => {
       apiFilters.map(filter => url = url + `&${filter}`)
     }
 
+    console.log('filters:', strength, bitterness, colour, page)
+
+    if (page > 1) {
+      const delimiter = url === baseUrl ? '?' : "&"
+      url = `${url}${delimiter}page=${page}`
+    }
+
+    console.log('url:', url)
+
     fetch(url)
       .then(res => res.json())
       .then(res => console.log('res', res) || res)
-      .then(data => setBeers(data));
+      .then(data => setBeers(page === 1 ? data : prevState => ([...prevState, ...data])));
 
-  }, [strength, bitterness, colour])
+  }, [strength, bitterness, colour, page])
 
   const handleFiltersClick = () => {
     setShowFilters(true);
@@ -73,6 +82,7 @@ const Home = () => {
           setBitterness={setBitterness}
           colour={colour}
           setColour={setColour}
+          setPage={setPage}
         />
       ) : (
         <>
@@ -81,6 +91,7 @@ const Home = () => {
             beers={beers}
             handleFiltersClick={handleFiltersClick}
           />
+          <button onClick={() => setPage(page + 1)}>More</button>
         </>
       )
   )
