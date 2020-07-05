@@ -6,7 +6,7 @@ import Selector from './Selector';
 
 import styles from './Filters.module.scss';
 
-const Filters = ({ setShowFilters, strength, setStrength, bitterness, setBitterness, colour, setColour }) => {
+const Filters = ({ setShowFilters, strength, setStrength, bitterness, setBitterness, colour, setColour, setPage }) => {
   const [strengthLocal, setStrengthLocal] = useState(strength);
   const [bitternessLocal, setBitternessLocal] = useState(bitterness);
   const [colourLocal, setColourLocal] = useState(colour);
@@ -24,6 +24,7 @@ const Filters = ({ setShowFilters, strength, setStrength, bitterness, setBittern
     setStrength(strengthLocal);
     setBitterness(bitternessLocal);
     setColour(colourLocal);
+    setPage(1);
 
     localStorage.setItem('strength_low', strengthLocal[0]);
     localStorage.setItem('strength_high', strengthLocal[1]);
