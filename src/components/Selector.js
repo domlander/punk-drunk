@@ -6,7 +6,7 @@ const Selector = ({
   low,
   high,
   min = 0,
-  max = 100,
+  max,
   isDisplayValue = true,
   step = 1,
   value,

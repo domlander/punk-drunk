@@ -5,12 +5,15 @@ import FilterTab from './FilterTab'
 
 import styles from './Beers.module.scss';
 
-const Beers = React.forwardRef(({ beers, handleFiltersClick }, ref) => (
+const Beers = React.forwardRef(({ beers, filters, handleFiltersClick }, ref) => (
   <>
     <div className={styles.container}>
       <Heading>Beer</Heading>
       <div className={styles.caption}>
         {beers.length}<span className={styles.captionCopy}> BEERS FOUND</span>
+      </div>
+      <div className={styles.chips}>
+        {console.log("filters", filters)}
       </div>
       <div className={styles.beers}>
         {

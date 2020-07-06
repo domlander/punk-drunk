@@ -3,6 +3,7 @@ import FilterTab from './FilterTab';
 import Tab from './Tab';
 import Heading from './Heading';
 import Selector from './Selector';
+import filters from '../filterData'
 
 import styles from './Filters.module.scss';
 
@@ -11,7 +12,7 @@ const Filters = ({ setShowFilters, strength, setStrength, bitterness, setBittern
   const [bitternessLocal, setBitternessLocal] = useState(bitterness);
   const [colourLocal, setColourLocal] = useState(colour);
 
-  const handleExit = () => {
+  const handleExitFilters = () => {
     setShowFilters(false);
   }
 
@@ -44,9 +45,11 @@ const Filters = ({ setShowFilters, strength, setStrength, bitterness, setBittern
             <Heading size="h3">Strength</Heading>
             <div className={styles.selector}>
               <Selector
-                low="0%"
-                high="20%"
-                max={20}
+                low={filters.strength.lowDescriptor}
+                high={filters.strength.highDescriptor}
+                max={filters.strength.max}
+                step={filters.strength.step}
+                isDisplayValue={filters.strength.displayValueInSlider}
                 value={strengthLocal}
                 setValue={setStrengthLocal}
               />
@@ -56,9 +59,11 @@ const Filters = ({ setShowFilters, strength, setStrength, bitterness, setBittern
             <Heading size="h3">Bitterness</Heading>
             <div className={styles.selector}>
               <Selector
-                high="Bitter"
-                max={5}
-                isDisplayValue={false}
+                low={filters.bitterness.lowDescriptor}
+                high={filters.bitterness.highDescriptor}
+                max={filters.bitterness.max}
+                step={filters.bitterness.step}
+                isDisplayValue={filters.bitterness.displayValueInSlider}
                 value={bitternessLocal}
                 setValue={setBitternessLocal}
               />
@@ -68,10 +73,11 @@ const Filters = ({ setShowFilters, strength, setStrength, bitterness, setBittern
             <Heading size="h3">Colour</Heading>
             <div className={styles.selector}>
               <Selector
-                low="Light"
-                high="Dark"
-                step={10}
-                isDisplayValue={false}
+                low={filters.colour.lowDescriptor}
+                high={filters.colour.highDescriptor}
+                max={filters.colour.max}
+                step={filters.colour.step}
+                isDisplayValue={filters.colour.displayValueInSlider}
                 value={colourLocal}
                 setValue={setColourLocal}
               />
@@ -82,7 +88,7 @@ const Filters = ({ setShowFilters, strength, setStrength, bitterness, setBittern
       <FilterTab position="center" handleClick={handleApplyFilters}>
         Apply Filters
       </FilterTab>
-      <Tab handleClick={handleExit} position="left">X</Tab>
+      <Tab handleClick={handleExitFilters} position="left">X</Tab>
     </>
   );
 }

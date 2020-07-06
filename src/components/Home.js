@@ -2,47 +2,47 @@ import React, { useState, useEffect } from 'react';
 import Filters from './Filters'
 import Beers from './Beers';
 import useIntersect from '../hooks/useIntersect'
+import filters from '../filterData'
 import * as utils from "../utils";
 // import styles from './Home.module.scss';
 
-export const baseUrl = "https://api.punkapi.com/v2/beers";
-
-// const isBottomOfPage = () => window.innerHeight + document.documentElement.scrollTop + (window.innerHeight / 2) > document.documentElement.offsetHeight;
+const baseUrl = "https://api.punkapi.com/v2/beers";
+let timesReachedEndOfPage = 1;
 
 const Home = () => {
-  const [beers, setBeers] = useState([]);
-  const [showFilters, setShowFilters] = useState(false);
-  // const [endOfPageReached, setEndOfPageReached] = useState(false);
-  const [page, setPage] = useState(1);
-
-  const defaultStrengthLowFilter = parseInt(localStorage.getItem("strength_low")) || utils.filterLimits["weakestPossibleStrength"];
-  const defaultStrengthHighFilter = parseInt(localStorage.getItem("strength_high")) || utils.filterLimits["strongestPossibleStrength"];
-  const defaultBitternessLowFilter = parseInt(localStorage.getItem("bitterness_low")) || utils.filterLimits["lowestPossibleBitterness"];
-  const defaultBitternessHighFilter = parseInt(localStorage.getItem("bitterness_high")) || utils.filterLimits["highestPossibleBitterness"];
-  const defaultColourLowFilter = parseInt(localStorage.getItem("colour_low")) || utils.filterLimits["palestPossibleColour"];
-  const defaultColourHighFilter = parseInt(localStorage.getItem("colour_high")) || utils.filterLimits["darkestPossibleColour"];
+  // Remember the user's previous filters
+  const defaultStrengthLowFilter = parseInt(localStorage.getItem("strength_low")) || filters.strength.min
+  const defaultStrengthHighFilter = parseInt(localStorage.getItem("strength_high")) || filters.strength.max
+  const defaultBitternessLowFilter = parseInt(localStorage.getItem("bitterness_low")) || filters.bitterness.min
+  const defaultBitternessHighFilter = parseInt(localStorage.getItem("bitterness_high")) || filters.bitterness.max
+  const defaultColourLowFilter = parseInt(localStorage.getItem("colour_low")) || filters.colour.min
+  const defaultColourHighFilter = parseInt(localStorage.getItem("colour_high")) || filters.colour.max
 
   const [strength, setStrength] = React.useState([defaultStrengthLowFilter, defaultStrengthHighFilter]);
   const [bitterness, setBitterness] = React.useState([defaultBitternessLowFilter, defaultBitternessHighFilter]);
   const [colour, setColour] = React.useState([defaultColourLowFilter, defaultColourHighFilter]);
 
+  const [showFilters, setShowFilters] = useState(false);
+  const [beers, setBeers] = useState([]);
+  const [page, setPage] = useState(1);
   const [ref, entry] = useIntersect({});
   const isVisible = entry && entry.isIntersecting;
 
-  // useEffect(() => {
-  //   console.log(" - - - - - endOfPageReached", isVisible)
-  //   setEndOfPageReached(isVisible);
-  // }, [isVisible])
+  useEffect(() => {
+    if (!isVisible) return;
+    timesReachedEndOfPage++
+    setPage(timesReachedEndOfPage);
+  }, [isVisible])
 
   useEffect(() => {
     // Collect the filters that we need for the api call
     let apiFilters = []
-    strength[0] !== utils.filterLimits["weakestPossibleStrength"] && apiFilters.push(`abv_gt=${strength[0]}`)
-    strength[1] !== utils.filterLimits["strongestPossibleStrength"] && apiFilters.push(`abv_lt=${strength[1]}`)
-    bitterness[0] !== utils.filterLimits["lowestPossibleBitterness"] && apiFilters.push(`ibu_gt=${utils.bitternessConverter[bitterness[0]]}`)
-    bitterness[1] !== utils.filterLimits["highestPossibleBitterness"] && apiFilters.push(`ibu_lt=${utils.bitternessConverter[bitterness[1]]}`)
-    colour[0] !== utils.filterLimits["palestPossibleColour"] && apiFilters.push(`ebc_gt=${colour[0]}`)
-    colour[1] !== utils.filterLimits["darkestPossibleColour"] && apiFilters.push(`ebc_lt=${colour[1]}`)
+    strength[0] !== filters.strength.min && apiFilters.push(`abv_gt=${strength[0]}`)
+    strength[1] !== filters.strength.max && apiFilters.push(`abv_lt=${strength[1]}`)
+    bitterness[0] !== filters.bitterness.min && apiFilters.push(`ibu_gt=${utils.bitternessConverter[bitterness[0]]}`)
+    bitterness[1] !== filters.bitterness.max && apiFilters.push(`ibu_lt=${utils.bitternessConverter[bitterness[1]]}`)
+    colour[0] !== filters.colour.min && apiFilters.push(`ebc_gt=${colour[0]}`)
+    colour[1] !== filters.colour.max && apiFilters.push(`ebc_lt=${colour[1]}`)
 
     // Build the api url from the filters
     let url = baseUrl
@@ -51,7 +51,7 @@ const Home = () => {
       apiFilters.map(filter => url = url + `&${filter}`)
     }
 
-    console.log('filters:', strength, bitterness, colour, page)
+    console.log('dependencies:', strength, bitterness, colour, page)
 
     if (page > 1) {
       const delimiter = url === baseUrl ? '?' : "&"
@@ -63,7 +63,7 @@ const Home = () => {
     fetch(url)
       .then(res => res.json())
       .then(res => console.log('res', res) || res)
-      .then(data => setBeers(page === 1 ? data : prevState => ([...prevState, ...data])));
+      .then(data => setBeers(page > 1 ? prevState => ([...prevState, ...data]) : data));
 
   }, [strength, bitterness, colour, page])
 
@@ -89,9 +89,9 @@ const Home = () => {
           <Beers
             ref={ref}
             beers={beers}
+            filters={[strength, bitterness, colour]}
             handleFiltersClick={handleFiltersClick}
           />
-          <button onClick={() => setPage(page + 1)}>More</button>
         </>
       )
   )
