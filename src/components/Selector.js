@@ -1,6 +1,34 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 import styles from './Selector.module.scss';
+
+const PrettoSlider = withStyles({
+  root: {
+    width: '90%'
+  },
+  thumb: {
+    height: '1.5em',
+    width: '1.5em',
+    color: '#0086A8',
+    'margin-top': 0
+  },
+  track: {
+    color: '#8EE8FF',
+    height: '1.5em',
+    'padding-right': '0.3em',
+    'margin-left': '0.3em',
+  },
+  rail: {
+    'border-radius': '1.5em',
+    color: '#fff',
+    height: '1.5em',
+    'padding-right': '1em',
+  },
+  valueLabel: {
+    left: 'auto'
+  }
+})(Slider);
 
 const Selector = ({
   low,
@@ -18,7 +46,8 @@ const Selector = ({
 
   return (
     <div className={styles.slider}>
-      <Slider
+      <PrettoSlider
+        className={styles.muiSlider}
         value={value}
         onChange={handleChange}
         min={min}

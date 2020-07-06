@@ -11,15 +11,15 @@ const filters = {
     "min": 0,
     "max": 5,
     "lowDescriptor": "",
-    "highDescriptor": "bitter",
+    "highDescriptor": "Bitter",
     "displayValueInSlider": false,
     "step": 1
   },
   "colour": {
     "min": 0,
     "max": 100,
-    "lowDescriptor": "weak",
-    "highDescriptor": "strong",
+    "lowDescriptor": "Weak",
+    "highDescriptor": "Strong",
     "displayValueInSlider": false,
     "step": 10
   }
