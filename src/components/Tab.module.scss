@@ -1,11 +1,17 @@
 .tab {
   position: fixed;
   bottom: 0;
+  cursor: pointer;
   font-size: 2rem;
   text-align: center;
   background-color: #FFFFFF;
-  padding: 0.2em 0.6em;
+  padding: 2% 4.75%;
   color: #0086A8;
+
+  @media (min-width: 768px){
+    font-size: 3rem;
+    padding: 0.3em 0.7em;
+  }
 
   &.left {
     left: 0;
