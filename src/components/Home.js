@@ -51,24 +51,33 @@ const Home = () => {
       apiFilters.map(filter => url = url + `&${filter}`)
     }
 
-    console.log('dependencies:', strength, bitterness, colour, page)
-
     if (page > 1) {
       const delimiter = url === baseUrl ? '?' : "&"
       url = `${url}${delimiter}page=${page}`
     }
 
-    console.log('url:', url)
-
     fetch(url)
       .then(res => res.json())
-      .then(res => console.log('res', res) || res)
-      .then(data => setBeers(page > 1 ? prevState => ([...prevState, ...data]) : data));
+      .then(
+        data => setBeers(page > 1
+          ? prevState => ([...prevState, ...data])
+          : data));
 
   }, [strength, bitterness, colour, page])
 
   const handleFiltersClick = () => {
     setShowFilters(true);
+  }
+
+  const getActiveFilters = () => {
+    let activeFilters = []
+    strength[0] !== filters.strength.min && activeFilters.push(`ABV > ${strength[0]}%`)
+    strength[1] !== filters.strength.max && activeFilters.push(`ABV < ${strength[1]}%`)
+    bitterness[0] !== filters.bitterness.min && activeFilters.push(`IBU > ${utils.bitternessConverter[bitterness[0]]}`)
+    bitterness[1] !== filters.bitterness.max && activeFilters.push(`IBU < ${utils.bitternessConverter[bitterness[1]]}`)
+    colour[0] !== filters.colour.min && activeFilters.push(`EBC > ${colour[0]}`)
+    colour[1] !== filters.colour.max && activeFilters.push(`EBC < ${colour[1]}`)
+    return activeFilters;
   }
 
   return (
@@ -89,7 +98,7 @@ const Home = () => {
           <Beers
             ref={ref}
             beers={beers}
-            filters={[strength, bitterness, colour]}
+            activeFilters={getActiveFilters()}
             handleFiltersClick={handleFiltersClick}
           />
         </>

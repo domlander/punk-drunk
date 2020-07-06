@@ -1,20 +1,21 @@
 .container {
-  max-width: 480px;
   margin: 0 auto;
+  max-width: 480px;
 }
 
 .heading {
   color: #0086A8;
-  font-weight: 400;
   font-size: 2.5rem;
+  font-weight: 400;
   line-height: 2rem;
 }
 
 .caption {
   color: #888888;
   font-size: 1rem;
-  margin-top: 1.5em;
   letter-spacing: 0.0625rem;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
 }
 
 .captionCopy {
@@ -22,5 +23,10 @@
 }
 
 .beers {
-  margin-top: 1.5em;
+  margin-top: 1em;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
 }
