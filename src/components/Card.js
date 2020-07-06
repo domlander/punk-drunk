@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './Card.module.scss'
 
-const Card = ({ beer, last }) => {
+const Card = ({ beer }) => {
   return (
     <div className={styles.container}>
       <img className={styles.image} src={beer.image_url} alt="beer"></img>
