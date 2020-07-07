@@ -51,14 +51,10 @@ const Home = () => {
       apiFilters.map(filter => url = url + `&${filter}`)
     }
 
-    console.log('dependencies:', strength, bitterness, colour, page)
-
     if (page > 1) {
       const delimiter = url === baseUrl ? '?' : "&"
       url = `${url}${delimiter}page=${page}`
     }
-
-    console.log('url:', url)
 
     fetch(url)
       .then(res => res.json())

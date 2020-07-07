@@ -12,9 +12,9 @@ const Beers = React.forwardRef(({ beers, filters, handleFiltersClick }, ref) => 
       <div className={styles.caption}>
         {beers.length}<span className={styles.captionCopy}> BEERS FOUND</span>
       </div>
-      <div className={styles.chips}>
+      {/* <div className={styles.chips}>
         {console.log("filters", filters)}
-      </div>
+      </div> */}
       <div className={styles.beers}>
         {
           beers.map((beer, i) => beers.length === i + 1
