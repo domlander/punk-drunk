@@ -6,8 +6,8 @@ import filters from '../filterData'
 import * as utils from "../utils";
 // import styles from './Home.module.scss';
 
-const baseUrl = "https://api.punkapi.com/v2/beers";
-let timesReachedEndOfPage = 1;
+const baseUrl = "https://api.punkapi.com/v2/beers"
+let timesReachedEndOfPage = 1
 
 const Home = () => {
   // Remember the user's previous filters
