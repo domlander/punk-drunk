@@ -1,4 +1,9 @@
 .container {
+  text-decoration: 'none';
+  &:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+  }
+  color: black;
   background: white;
   border-radius: 1em;
   display: flex;
