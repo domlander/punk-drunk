@@ -3,7 +3,12 @@ import styles from './Card.module.scss'
 
 const Card = ({ beer }) => {
   return (
-    <div className={styles.container}>
+    <a
+      href={`https://brewdogrecipes.com/recipes/${beer.name.replace(/ /g, "-")}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={styles.container}
+    >
       <img className={styles.image} src={beer.image_url} alt="beer"></img>
       <div className={styles.info}>
         <div>
@@ -20,7 +25,7 @@ const Card = ({ beer }) => {
           EBC: <span className="ebcValue">{beer.ebc || "unavailable"}</span>
         </p> */}
       </div>
-    </div>
+    </a>
   )
 }
 
