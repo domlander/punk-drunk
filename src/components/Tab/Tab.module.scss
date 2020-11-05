@@ -5,25 +5,29 @@
   text-align: center;
   color: #FFFFFF;
   background-color: #0086A8;
-  border-radius: 1em 0 0 0;
   cursor: pointer;
+  padding: 0.6em 1.2em;
+
+  &.secondary {
+    color: #0086A8;
+    background-color: #FFFFFF;
+    padding: 0.4em 0.8em;
+    border: 1px solid #d6d6d6;
+  }
 
   &.left {
     left: 0;
     border-radius: 0 1em 0 0;
-    padding: 0.6em 1.5em;
   }
 
   &.center {
     left: 50%;
     transform: translate(-50%, 0%);
     border-radius: 1em 1em 0 0;
-    padding: 0.6em 1em;
   }
 
   &.right {
     right: 0;
     border-radius: 1em 0 0 0;
-    padding: 0.6em 1.5em;
   }
 }

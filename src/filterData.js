@@ -18,8 +18,8 @@ const filters = {
   "colour": {
     "min": 0,
     "max": 100,
-    "lowDescriptor": "Weak",
-    "highDescriptor": "Strong",
+    "lowDescriptor": "Pale",
+    "highDescriptor": "Dark",
     "displayValueInSlider": false,
     "step": 10
   }

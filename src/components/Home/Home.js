@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Filters from './Filters'
-import Beers from './Beers';
-import useIntersect from '../hooks/useIntersect'
-import filters from '../filterData'
-import * as utils from "../utils";
+import Filters from '../Filters'
+import Beers from '../Beers';
+import useIntersect from '../../hooks/useIntersect'
+import filters from '../../filterData'
+import * as utils from "../../utils";
 // import styles from './Home.module.scss';
 
 const baseUrl = "https://api.punkapi.com/v2/beers";
@@ -85,7 +85,6 @@ const Home = () => {
           <Beers
             ref={ref}
             beers={beers}
-            filters={[strength, bitterness, colour]}
             handleFiltersClick={handleFiltersClick}
           />
         </>

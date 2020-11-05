@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import FilterTab from './FilterTab';
-import Tab from './Tab';
-import Heading from './Heading';
-import Selector from './Selector';
-import filters from '../filterData'
+import Tab from '../Tab';
+import Heading from '../Heading';
+import Selector from '../Selector';
+import filters from '../../filterData'
 
 import styles from './Filters.module.scss';
 
@@ -85,10 +84,8 @@ const Filters = ({ setShowFilters, strength, setStrength, bitterness, setBittern
           </div>
         </div>
       </div>
-      <FilterTab position="center" handleClick={handleApplyFilters}>
-        Apply Filters
-      </FilterTab>
-      <Tab handleClick={handleExitFilters} position="left">X</Tab>
+      <Tab position="center" handleClick={handleApplyFilters}>Apply Filters</Tab>
+      <Tab handleClick={handleExitFilters} position="left" secondaryStyle>X</Tab>
     </>
   );
 }

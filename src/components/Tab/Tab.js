@@ -1,16 +1,18 @@
 import React from 'react';
 import classnames from 'classnames'
-import styles from './FilterTab.module.scss';
+import styles from './Tab.module.scss';
 
-const FilterTab = ({
+const Tab = ({
+  children,
   handleClick,
   position,
-  children,
+  secondaryStyle = false
 }) => {
   const classNames = classnames(styles.filters, {
     [styles.left]: position === "left",
     [styles.center]: position === "center",
     [styles.right]: position === "right",
+    [styles.secondary]: secondaryStyle,
   });
 
   return (
@@ -23,4 +25,4 @@ const FilterTab = ({
   );
 }
 
-export default FilterTab;
+export default Tab;

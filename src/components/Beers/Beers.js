@@ -1,20 +1,17 @@
 import React from 'react';
-import Card from './Card'
-import Heading from './Heading'
-import FilterTab from './FilterTab'
+import Card from '../Card'
+import Heading from '../Heading'
+import Tab from '../Tab'
 
 import styles from './Beers.module.scss';
 
-const Beers = React.forwardRef(({ beers, filters, handleFiltersClick }, ref) => (
+const Beers = React.forwardRef(({ beers, handleFiltersClick }, ref) => (
   <>
     <div className={styles.container}>
       <Heading>Beer</Heading>
       <div className={styles.caption}>
         {beers.length}<span className={styles.captionCopy}> BEERS FOUND</span>
       </div>
-      {/* <div className={styles.chips}>
-        {console.log("filters", filters)}
-      </div> */}
       <div className={styles.beers}>
         {
           beers.map((beer, i) => beers.length === i + 1
@@ -23,9 +20,9 @@ const Beers = React.forwardRef(({ beers, filters, handleFiltersClick }, ref) => 
         }
       </div>
     </div>
-    <FilterTab position="right" handleClick={handleFiltersClick}>
+    <Tab position="right" handleClick={handleFiltersClick}>
       Filters
-    </FilterTab>
+    </Tab>
   </>
 ))
 
